@@ -1,0 +1,462 @@
+
+specifications of a typical user profile management system
+
+
+https://genesis.global/platform/marketplace/user-profile-management/
+https://www.techtarget.com/searchvirtualdesktop/feature/User-profile-management-software-in-the-modern-enterprise
+https://frontegg.com/guides/user-management
+https://curity.io/docs/idsvr/latest/user-management-admin-guide/defining-user-management-profile.html
+https://www.miniorange.com/products/user-management
+
+
+Testing types
+https://www.ficode.com/blog/boundary-value-analysis-bva-and-equivalence-partitioning-ep-testing#:~:text=Sep-,Boundary%20Value%20Analysis%20(BVA)%20and%20Equivalence%20Partitioning%20(EP),explore%20each%20technique%20in%20detail:
+
+
+
+q1 ===>
+
+I am a backend software developer having 1 to 2 year experience. Please help me.
+I want to design a very simple user management system.
+Below are specifications:
+	. email specifications:
+		1. 5 to 25 letter length
+		2. only alphabets and numerals
+		3. a username (local part), a connecting '@' symbol, a domain name, and a top-level domain (TLD)) 
+	. password specifications:
+		1. 6 letter any combination length
+		2. only alphabets and numerals
+	. then user will get a link for registration in API response itself.
+	. the registration link contains a token of standard length.
+	. after cliking on the link registration completes.
+	. then user can login with username and password.
+
+Based on this please generate detailed software requirement specifications for each API.
+Typical API should include:
+	. endpoint name
+	. method type
+	. input param (mandatory as well as non mandatory) (path parameter or query parameter, request body parameter, header parameter)
+	. output response code for success
+	. output response body for success
+	. output response code for failure
+	. output response body for failure
+
+Note: 
+	. there is no password encryption required.
+	. it is a Docker and Docker compose based solution.
+	. there is no front end to be considered.
+	. backend development to be done using Python based framework.
+	. database is SQLite.
+	. have an endpoint to know version of the implementation /version
+	. generate a mind map image with all possible details, use standard way to generate mindmap. Mention only API related details only. nothing about deployment. Nothing about Database. Have spelling of all words correct. Double check on typo error.
+	. mention all required database schema, or query to be run on database. for required CRUD on database tables.
+	. generate a word document with all requirements mentioned in easy but consistent way. In future the same document will be used to feed as input to automatically generate code.
+
+
+q2 ===>
+Thanks, now please provide:
+	. implement the same using Python based framework. implement all required code, nothing to be left to be implemented.
+	. have sufficient logging in debug mode.
+	. no in-memory database to be used.
+	. once any database table is created then it should not be dropped at any time.
+	. avoid hard coding of items e.g. status code.
+	. only support following status codes: 200, 201, 202, 400, 401, 403, 500
+	. Be consistent in naming variable etc.
+	. name of the app, database or relevant commonly used items should prefix with "user_mngt".
+	. it is a Docker and Docker compose based solution.
+	. have entired code in a zip file so I can extract and ready to run.
+	. provide step by step or detailed steps for running code on docker so any software engineer with not much experience can do the setup.
+	. provide link if any sample youtube video in case got stuck in code deployment etc.
+
+
+q3 ===>
+Thanks, now please provide:
+	. test cases to test this entire system.
+	. include positive and negative test cases with popular testing methodologies.
+	. in negative test cases include boundary value analysis technique for each field of api.
+	. group the test cases based on positive and negative types.
+	. manual testing using POSTMAN:
+		1. prepare complete and ready to use postman collection, which can be simply imported in POSTMAN.
+	. implement api testing framework using Python, cover all test cases, use Pytest framework.
+		1. avoid hard coding of items e.g. status code.
+		2. when a scenario fails, then during assertion print response code and response body.
+		3. implement all setup and teardown fixtures.
+		4. do not leave any coding part unimplemented.
+		5. framework should have execution report generation, automatically generated. 
+		6. report should be in html format so can be viewed in browser easily.
+
+
+
+=========================================================
+part 2 ==> additional features
+=========================================================
+
+q2.1 ===>
+
+Please continue the development part for simple user management system as below:
+	. the existing login api response body should include a session key
+	. add an endpoint for logout, it needs email and session key as request parameters.
+	. add enpoint as /prefix_user to GET/ retrieve user details, it needs email and session key as request parameters.
+	. add enpoint as /prefix_user to PUT/ update user details. it needs email and session key as request parameters.
+	. field for user details as below:
+		1. first name (mandatory) (length=5 to 25, only alphabets, small or capital, no numbers, no special character)
+		2. last name (mandatory) (length=5 to 25, only alphabets, small or capital, no numbers, no special character)
+		3. address1 (length=5 to 25)
+		4. address2 (length=5 to 25)
+		5. city (length=5 to 25)
+		6. state (length=5 to 25)
+		7. country (mandatory) (length=5 to 25)
+		8. pin code (mandatory) (length=5 to 25)
+		9. contact number country code (mandatory) (length=3 digits)
+		10. contact number (mandatory) (length=10 digits)
+		11. email and password fields are mandatory
+		12. email can not be changed in any case
+		13. email specifications:
+			1. 5 to 25 letter length
+			2. only alphabets and numerals
+			3. a username (local part), a connecting '@' symbol, a domain name, and a top-level domain (TLD)) 
+		14. password specifications:
+			1. 6 letter any combination length
+			2. only alphabets and numerals
+	. add enpoint as /prefix_user to delete user with email, password and session key. response should be a simple message.
+	. add endpoint for forget password which need to enter email, new password, confirm new password and session key.
+	. add endpoint to get the registration link again if in earlier case not activated. take email and password as input.
+
+Typical API should include:
+	. endpoint name
+	. method type
+	. input param (mandatory as well as non mandatory) (path parameter or query parameter, request body parameter, header parameter)
+	. output response code for success
+	. output response body for success
+	. output response code for failure
+	. output response body for failure
+
+Note: 
+	. there is no password encryption required.
+	. it is a Docker based solution.
+	. there is no front end to be considered.
+	. backend development to be done using Python based framework.
+	. database is SQLite.
+	. have an endpoint to know version of the implementation /version
+    . based on this please generate detailed and full software requirement specifications document (SRS) for each API again.
+	. in SRS with all requirements mentioned in easy but consistent way. in future the same document will be used to feed as input to automatically generate code.
+	. in SRS mention all required database schema, or query to be run on database. for required CRUD on database tables.
+	. generate entire SRS document (name it "User Management SRS"), and provide link to download.
+	. double check on typo error, spellings in the code, in the SRS document, any other place etc.
+
+	
+
+q2.2 ===>
+Thanks, now please provide:
+	. generate a mind map image (name it "User Management mind map") with all possible details, use standard way to generate mindmap. mention only API related details only. nothing about deployment. nothing about database. have spelling of all words correct in the mind map image. image should have white as background colour.
+
+
+q2.3 ===>
+Thanks, now please provide:
+	. implement the same using same Python based framework used earlier. 
+	. implement all required code, nothing to be left to be unimplemented. 
+	. provide entire code again.
+	. provide script or code for all the required files again.
+	. the libraries, packages used should be of latest and stable version.
+	. perform code review internally per standard guideline.
+	. remove unused import statements from code.
+	. have sufficient logging in debug mode.
+	. no in-memory database to be used.
+	. once any database table is created then it should not be dropped at any time.
+	. avoid hard coding of items e.g. status code.
+	. only support following status codes: 200, 201, 202, 400, 401, 403, 500
+	. Be consistent in naming variable etc.
+	. name of the app, database or relevant commonly used items should prefix with "user_mngt".
+	. provide step by step or detailed steps for running code on docker so any software engineer with not much experience can do the setup.
+
+
+q2.4 ===>
+Thanks, now please provide:
+	. now for the development side, please generate swagger file (name is swagger.yaml)
+	
+	
+q2.5 ===>
+Thanks, now please provide:
+	. test cases to test this entire system. provide word document for the same.
+	. include positive and negative test cases with popular testing methodologies.
+	. in negative test cases include boundary value analysis technique for each field of api.
+	. group the test cases based on positive and negative types.
+	. manual testing using POSTMAN:
+		1. prepare complete and ready to use postman collection, which can be simply imported in POSTMAN. add header of content type in each api request
+	. implement api testing framework using Python, cover all test cases, cover all api, use Pytest framework.
+		1. implement all required code, nothing to be left to be unimplemented. 
+		2. provide entire code again.
+		3. remove unused import statements from code.
+		4. the libraries, packages used should be of latest and stable version.
+		5. perform code review internally per standard guideline.
+		6. have sufficient logging.
+		7. avoid hard coding of items e.g. status code.
+		8. when a scenario fails, then during assertion print response code and response body.
+		9. implement all setup and teardown fixtures.
+		10. do not leave any coding part unimplemented.
+		11. framework should have execution report generation, automatically generated. 
+		12. report should be in html format so can be viewed in browser easily.
+		
+
+
+=========================================================
+part 3 ==> additional features
+=========================================================
+
+
+legacy registration  --- scrapped
+legacy logout -- scrapped
+
+OTP based registration
+	. login with OTP -> enter email -> submit -> enter pwd + OTP
+
+login attempts
+   . after 3 attempts of login with correct email but incorrect password, corresponding account should be locked for locking period of 5 min.
+   . during this locking period, attepmt to login should return 400 error with message "account is locked please try after sometime".
+   . locking period should be in suitable config file.
+
+loggout 
+	. logged out user should not be able to update user or delete user
+
+refresh session key endpoint
+
+
+
+
+
+q3.1 ===>
+Please continue the development part for simple user management system as below:
+	. so far development done will be called as legacy or default flow.
+	. new development is version 3 (in short v3).
+	. let us rethink of registration flow.
+		1. v3 flow will be based on a flag or a variable in a suitable config file.
+		2. if the flag is True then new flow is enabled else default legacy flow.
+		3. in v3 flow during registration first user enter email id and submit then if not duplicate email then response would be a 6 digit OTP and a session key then enter email, password, session key and OTP (all fields mandatory) then registration is successful
+		4. add suitable seperate endpoint for this registration flow.
+	. take care if there is any impact on other endpoints.
+	. remember relevant instructions mentioned earlier for development.
+
+Typical API should include:
+	. endpoint name
+	. method type
+	. input param (mandatory as well as non mandatory) (path parameter or query parameter, request body parameter, header parameter)
+	. output response code for success
+	. output response body for success
+	. output response code for failure
+	. output response body for failure
+
+Note: 
+	. there is no password encryption required.
+	. it is a Docker based solution.
+	. there is no front end to be considered.
+	. backend development to be done using Python based framework.
+	. database is SQLite.
+	. have an endpoint to know version of the implementation /version
+    . based on this please generate detailed and full software requirement specifications document (SRS) for all the endpoints again.
+	. in SRS mention all requirements in easy but consistent way. in future the same document will be used to feed as input to automatically generate code.
+	. double check on typo error, spellings in the code, in the SRS document, any other place etc.
+	. in SRS mention all required database schema, or query to be run on database. for required CRUD on database tables.
+	. use numbers in SRS for bullet points or applicable sections (not roman numbers)
+	. in SRS mention all required database schema, or query to be run on database. for required CRUD on database tables.
+	. generate entire SRS document (name it "User Management SRS"), and provide link to download.
+
+
+
+gemini q3.2 ===>
+Thanks, now please:
+	. generate a mind map image with all possible details
+	. use standard way to generate mindmap. use medium to large font and bigger boxes in mind map image.
+	. mention only API related details only. nothing about deployment. nothing about database. 
+	. have spelling of all words correct in the mind map image. 
+	. image should have white as background colour.
+	. check three times on typo error, spellings in the mind map image, any other place etc.
+	. generate high resolution image to have all words shown correctly
+
+
+
+q3.3 ===>
+Thanks, now please provide:
+	. please remember all the context since the beginning.
+	. implement the same using same Python based framework used earlier. 
+	. implement all required code, nothing to be left to be unimplemented. 
+	. provide entire code again. provide folder structure again.
+	. provide script or code for all the required files again.
+	. the libraries, packages used should be of latest and stable version.
+	. perform code review internally per standard guideline.
+	. remove unused import statements from code.
+	. have sufficient logging in debug mode.
+	. no in-memory database to be used.
+	. once any database table is created then it should not be dropped at any time.
+	. avoid hard coding of items e.g. status code.
+	. only support following status codes: 200, 201, 202, 400, 401, 403, 500
+	. Be consistent in naming variable etc.
+	. it is a Docker and docker-compose based solution.
+	. expose port for database as well, so it will be useful to connect to the database for troubleshooting.
+	. provide step by step or detailed steps for running code on docker so any software engineer with not much experience can do the setup.
+	. provide all code in zip format to download.
+
+
+q3.4 ===>
+Thanks, now please provide:
+	. once OTP is received during registration for a particular user then that OTP should be valid, other otp should not be valid.
+	
+
+q3.5 ===>
+Thanks, now please provide:
+	. now for the development side, please generate swagger file (name is swagger.yaml). 
+	. remove the legacy flow related api or any other item.
+	. mention the positive as well as negative details.
+	. provide a link to download.
+	
+q3.6 ===>
+Thanks, now please provide:
+	. test cases to test this entire system.
+	. but refer to the attached swagger file (openapi.yaml) as the ultimate reference.
+	. include positive and negative test cases with popular testing methodologies.
+	. in negative test cases include boundary value analysis technique for each field of api.
+	. group the test cases based on positive and negative types.
+	. provide test cases word (name it User Management TC) file to download.
+	
+
+q3.7 ====>
+Thanks, now please provide:
+	. manual testing using POSTMAN:
+		1. prepare fresh, complete and ready to use postman collection, which can be simply imported in POSTMAN.
+		2. add console logging in postman script at every place.
+     	3. refer to the attached swagger.yaml file as the ultimate reference.
+		4. add header of content type in each api request.
+		5. provide all details e.g. base url variable, endpoint for each request.
+		6. provide the required json fie to download.
+
+q3.8 ===>
+Thanks, now please provide:
+	. freshly implement api testing automation framework using Python, cover all test cases.
+    . refer the attached swagger (swagger.yaml) and SRS (software requirement specifications) as the ultimate reference.
+	. use Pytest framework.
+	. implement all required code, nothing to be left to be unimplemented. 
+	. provide entire code AGAIN to download. provide folder structure again.
+	. remove unused import statements from code.	
+	. the libraries, packages used should be of latest and stable version.
+	. perform code review internally per standard guideline.
+	. have sufficient logging.
+	. avoid hard coding of any items.
+	. when a scenario fails, then during assertion print response code and response body.
+	. implement all setup and teardown fixtures.
+	. do not leave any coding part unimplemented.
+	. framework should have execution report generation mechanism. 
+	. report should be in html format so can be viewed in browser easily.
+	. note - no role of docker in automation.
+	. in automation remove unused imports in few files, also some of the imports are missing so unable to run code.
+	. provide sufficient logging for each api request body and response body for quick troubleshooting.
+	. provide entire code in zip file to download.
+
+q3.9 ====>
+Thanks, now please provide:
+	. in docker-compose.yml pls use sqlite-web
+
+http://localhost:8080/user_mngt_users/content/
+
+
+q3.10 ====>
+Thanks, now please provide:
+	loggout 
+		. logged out user should not be able to update user or delete user
+		
+q3.11 ====>
+Thanks, now please provide:
+	login attempts
+	   . after 3 attempts of login with correct email but incorrect password, corresponding account should be locked for locking period of 5 min.
+	   . during this locking period, attepmt to login should return 400 error with message "account is locked please try after sometime".
+	   . locking period should be in a suitable config file.
+
+q3.12 ====>
+Thanks, now please provide:
+	. refresh session key
+		1. please implement new endpoint to refresh session key. 
+		2. request parameters are email, current session id for this user and password.
+		3. response should be different and unique session id.
+		4. also need to update this session key in database for corresponding email.
+
+
+q3.13 ====>
+Thanks, now please provide:
+	. now for the development side, please generate swagger file (name is swagger.yaml). 
+	. remove the legacy flow related api or any other item.
+	. mention the positive as well as negative details.
+	. provide a link to download.
+
+
+
+q3.14 ====>
+Thanks, now please provide:
+	. prepare a (software requirement specifications) SRS document.
+	. in SRS mention all requirements considered so far in easy but consistent way.
+	. do not forget to add existing api related content, specifications etc.
+	. in future the this SRS document will be used to feed as input to automatically generate code.
+	. double check on typo error, spellings in the code, in the SRS document, any other place etc.
+	. mention all required database schema, or query to be run on database. for required CRUD on database tables.
+	. use numbers for bullet points or applicable sections (not roman numbers)
+	. mention all required database schema, or query to be run on database. for required CRUD on database tables.
+	. generate entire SRS document (name it "User Management SRS"), and provide link to download.
+
+
+q3.15 ====>
+Thanks, now please provide:
+	. generate a mind map image with all possible details.
+	. consider all requirements considered so far in easy but consistent way.
+	. do not forget to add existing api related content, specifications etc.
+	. use standard way to generate mindmap. use medium to large font and bigger boxes in mind map image.
+	. mention only API related details only. nothing about deployment. nothing about database. 
+	. have spelling of all words correct in the mind map image. 
+	. image should have white as background colour.
+	. check three times on typo error, spellings in the mind map image, any other place etc.
+	. generate high resolution image to have all words shown correctly
+	. need to have simple format of mind map.
+    . no flow chart or flow diagram.
+	. provide a image download link.
+
+q3.16 ====>
+Thanks, now please provide:
+	. test cases to test this entire back end application. consider testing all endpoints.
+	. user the attached swagger.yaml and User Management SRS document as input.
+	. mention steps for each test case.
+	. include positive and negative test cases with popular testing methodologies.
+	. in negative test cases include boundary value analysis technique for each field of api.
+	. group the test cases based on positive and negative types.
+	. generate word file and provide link to download.
+
+
+q3.17 ====>
+Thanks, now please provide:
+	. manual testing using POSTMAN:
+		1. prepare fresh, complete and ready to use postman collection, which can be simply imported in POSTMAN.
+    	2 user the attached swagger.yaml as the ultimate reference.
+		3. add console logging in postman script at every place.
+		4. add header of content type in each api request.
+		5. provide all details e.g. base url variable, endpoint for each request.
+		6. provide the required json fie to download.
+
+
+q3.18 ====>
+Thanks, now please provide:
+	. use attached (software requirement specifications) SRS document.
+	. for update profile for positive case response code is 200 instead of 202, please make this correction
+	. generate entire SRS document (name it "User Management SRS"), and provide link to download.
+
+
+q3.19 ====>
+Thanks, now please provide:
+	. manual testing using POSTMAN:
+		1. user the attached swagger.yaml as the ultimate reference.
+		2. for update profile for positive case response code is 200 instead of 202, please make this correction
+		3. provide the required json fie to download.
+
+
+q3.20 ====>
+Thanks, now please provide:
+	. automation freshly implementation:
+		1. user the attached zip file as the ultimate reference.
+		2. for update profile for positive case response code is 200 instead of 202, please make this correction.
+		3. provide updated but entire code AGAIN to download.
+		4. provide entire code in zip file to download.
+
