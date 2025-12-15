@@ -1,0 +1,4 @@
+-- REQUIRED ONE-TIME DATABASE UPDATE (DO NOT DROP TABLE)
+
+ALTER TABLE user_mngt_users ADD COLUMN failed_login_attempts INTEGER DEFAULT 0;
+ALTER TABLE user_mngt_users ADD COLUMN lock_until TEXT;

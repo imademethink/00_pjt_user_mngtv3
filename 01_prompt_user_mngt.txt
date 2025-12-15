@@ -460,3 +460,110 @@ Thanks, now please provide:
 		3. provide updated but entire code AGAIN to download.
 		4. provide entire code in zip file to download.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+docker compose down
+docker compose build
+
+docker compose up --build
+docker compose up -d
+docker compose logs -f
+
+
+pip install -r requirements.txt
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+future scope: =====================
+legacy --
+login with captcha -> enter email -> submit -> enter pwd + captcha
+multi screen login -> enter email -> submit -> enter pwd + OTP / captcha
+Amazon prime/ Netflix/ Whatsapp/ Hotstar - QR code scan login
+SSO login
+Multi factor auth
+Login with gmail/ facebook
+multi device login - desktop browser(s), mobile (ios / android), tab, TV
+simple email + OTP login
+
+logout --
+	logout from all devices - invalidate session key (24 hr validity)
+	logout due to inactivity (60 min)
+
+
+
+user deactivation
+audit trails for user activity e.g. login, logout timestamp, any mandatory parameters changed, 
+multi-tenant architectures - is this multi device login???
+session management - timeouts
+				test cases in excel/ pdf
+
+
+
+
+

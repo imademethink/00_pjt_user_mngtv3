@@ -1,0 +1,512 @@
+{
+  "info": {
+    "name": "User Management API \u2013 Complete Postman Collection (Update Profile 200)",
+    "_postman_id": "f3e62b35-aca3-4916-8490-8418855f5a30",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000"
+    },
+    {
+      "key": "email",
+      "value": "user123@test.com"
+    },
+    {
+      "key": "password",
+      "value": "ab12CD"
+    },
+    {
+      "key": "otp",
+      "value": "123456"
+    },
+    {
+      "key": "session_key",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Register Init",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "console.log('Request:', pm.info.requestName);",
+              "console.log('URL:', pm.request.url.toString());",
+              "if (pm.request.body) console.log('Body:', pm.request.body.raw);"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "console.log('Status:', pm.response.code);",
+              "console.log('Body:', pm.response.text());",
+              "pm.test('Valid status code', function () { pm.expect(pm.response.code).to.be.oneOf([200, 400, 403]); });",
+              "if ([200,201].includes(pm.response.code)) { const jsonData = pm.response.json(); }",
+              "pm.test('Response has otp', function () { pm.expect(pm.response.json()).to.have.property('otp'); });",
+              "pm.test('Response has session_key', function () { pm.expect(pm.response.json()).to.have.property('session_key'); });",
+              "if (pm.response.code === 200 && pm.response.json().session_key) {",
+              "pm.collectionVariables.set('session_key', pm.response.json().session_key);",
+              "}"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v3/users/register/init",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v3",
+            "users",
+            "register",
+            "init"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{email}}\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Register Complete",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "console.log('Request:', pm.info.requestName);",
+              "console.log('URL:', pm.request.url.toString());",
+              "if (pm.request.body) console.log('Body:', pm.request.body.raw);"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "console.log('Status:', pm.response.code);",
+              "console.log('Body:', pm.response.text());",
+              "pm.test('Valid status code', function () { pm.expect(pm.response.code).to.be.oneOf([201, 400, 403]); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v3/users/register/complete",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v3",
+            "users",
+            "register",
+            "complete"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\",\n  \"otp\": \"{{otp}}\",\n  \"session_key\": \"{{session_key}}\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Login",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "console.log('Request:', pm.info.requestName);",
+              "console.log('URL:', pm.request.url.toString());",
+              "if (pm.request.body) console.log('Body:', pm.request.body.raw);"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "console.log('Status:', pm.response.code);",
+              "console.log('Body:', pm.response.text());",
+              "pm.test('Valid status code', function () { pm.expect(pm.response.code).to.be.oneOf([200, 401]); });",
+              "if ([200,201].includes(pm.response.code)) { const jsonData = pm.response.json(); }",
+              "pm.test('Response has session_key', function () { pm.expect(pm.response.json()).to.have.property('session_key'); });",
+              "if (pm.response.code === 200 && pm.response.json().session_key) {",
+              "pm.collectionVariables.set('session_key', pm.response.json().session_key);",
+              "}"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v1/users/login",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "users",
+            "login"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Logout",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "console.log('Request:', pm.info.requestName);",
+              "console.log('URL:', pm.request.url.toString());",
+              "if (pm.request.body) console.log('Body:', pm.request.body.raw);"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "console.log('Status:', pm.response.code);",
+              "console.log('Body:', pm.response.text());",
+              "pm.test('Valid status code', function () { pm.expect(pm.response.code).to.be.oneOf([200, 401]); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v1/users/logout",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "users",
+            "logout"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{email}}\",\n  \"session_key\": \"{{session_key}}\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Get Profile",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "console.log('Request:', pm.info.requestName);",
+              "console.log('URL:', pm.request.url.toString());",
+              "if (pm.request.body) console.log('Body:', pm.request.body.raw);"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "console.log('Status:', pm.response.code);",
+              "console.log('Body:', pm.response.text());",
+              "pm.test('Valid status code', function () { pm.expect(pm.response.code).to.be.oneOf([200, 403]); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v1/prefix_user",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "prefix_user"
+          ],
+          "query": [
+            {
+              "key": "email",
+              "value": "{{email}}"
+            },
+            {
+              "key": "session_key",
+              "value": "{{session_key}}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Update Profile",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "console.log('Request:', pm.info.requestName);",
+              "console.log('URL:', pm.request.url.toString());",
+              "if (pm.request.body) console.log('Body:', pm.request.body.raw);"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "console.log('Status:', pm.response.code);",
+              "console.log('Body:', pm.response.text());",
+              "pm.test('Valid status code', function () { pm.expect(pm.response.code).to.be.oneOf([200, 400, 403]); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v1/prefix_user",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "prefix_user"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\",\n  \"session_key\": \"{{session_key}}\",\n  \"first_name\": \"Jonathan\",\n  \"last_name\": \"Williams\",\n  \"country\": \"Indiaaa\",\n  \"pin_code\": \"560001\",\n  \"contact_country_code\": \"091\",\n  \"contact_number\": \"9876543210\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Delete User",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "console.log('Request:', pm.info.requestName);",
+              "console.log('URL:', pm.request.url.toString());",
+              "if (pm.request.body) console.log('Body:', pm.request.body.raw);"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "console.log('Status:', pm.response.code);",
+              "console.log('Body:', pm.response.text());",
+              "pm.test('Valid status code', function () { pm.expect(pm.response.code).to.be.oneOf([202, 401]); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v1/prefix_user",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "prefix_user"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\",\n  \"session_key\": \"{{session_key}}\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Forget Password",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "console.log('Request:', pm.info.requestName);",
+              "console.log('URL:', pm.request.url.toString());",
+              "if (pm.request.body) console.log('Body:', pm.request.body.raw);"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "console.log('Status:', pm.response.code);",
+              "console.log('Body:', pm.response.text());",
+              "pm.test('Valid status code', function () { pm.expect(pm.response.code).to.be.oneOf([200, 400, 403]); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v1/users/forget_password",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "users",
+            "forget_password"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{email}}\",\n  \"new_password\": \"{{password}}\",\n  \"confirm_new_password\": \"{{password}}\",\n  \"session_key\": \"{{session_key}}\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Version",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "console.log('Request:', pm.info.requestName);",
+              "console.log('URL:', pm.request.url.toString());",
+              "if (pm.request.body) console.log('Body:', pm.request.body.raw);"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "console.log('Status:', pm.response.code);",
+              "console.log('Body:', pm.response.text());",
+              "pm.test('Valid status code', function () { pm.expect(pm.response.code).to.be.oneOf([200]); });",
+              "if ([200,201].includes(pm.response.code)) { const jsonData = pm.response.json(); }",
+              "pm.test('Response has version', function () { pm.expect(pm.response.json()).to.have.property('version'); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v1/version",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "version"
+          ]
+        }
+      }
+    }
+  ]
+}

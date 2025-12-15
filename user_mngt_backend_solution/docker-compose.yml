@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  user_mngt_app:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./user_mngt_data:/app/user_mngt_data
+
+  user_mngt_sqlite_web:
+    image: coleifer/sqlite-web:latest
+    command: sqlite_web /data/user_mngt_db.sqlite --host 0.0.0.0 --port 8080
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./user_mngt_data:/data

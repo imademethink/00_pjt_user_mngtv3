@@ -1,0 +1,399 @@
+openapi: 3.0.3
+info:
+  title: User Management API (v3)
+  version: "3.0.0"
+  description: >
+    Swagger specification for User Management System (v3 only).
+    Legacy flow APIs removed.
+    Positive and negative responses documented.
+
+servers:
+  - url: http://localhost:8000
+
+components:
+  schemas:
+    Email:
+      type: string
+      minLength: 5
+      maxLength: 25
+      description: Email with local part, '@', domain and TLD.
+      example: user123@domaincom
+
+    Password:
+      type: string
+      minLength: 6
+      maxLength: 6
+      description: Exactly 6 alphanumeric characters.
+      example: abc123
+
+    OTP:
+      type: string
+      minLength: 6
+      maxLength: 6
+      description: 6 digit OTP.
+      example: "123456"
+
+    SessionKey:
+      type: string
+      description: Active session key.
+      example: 550e8400-e29b-41d4-a716-446655440000
+
+    Name:
+      type: string
+      minLength: 5
+      maxLength: 25
+      description: Alphabets only.
+      example: Rahul
+
+    GenericField:
+      type: string
+      minLength: 5
+      maxLength: 25
+
+    CountryCode:
+      type: string
+      minLength: 3
+      maxLength: 3
+      example: "091"
+
+    ContactNumber:
+      type: string
+      minLength: 10
+      maxLength: 10
+      example: "9999999999"
+
+paths:
+
+  /api/v3/users/register/init:
+    post:
+      summary: Registration Initiation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email]
+              properties:
+                email:
+                  $ref: "#/components/schemas/Email"
+      responses:
+        "200":
+          description: OTP and session key generated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  otp:
+                    $ref: "#/components/schemas/OTP"
+                  session_key:
+                    $ref: "#/components/schemas/SessionKey"
+        "400":
+          description: Invalid email
+        "403":
+          description: Duplicate active account
+        "500":
+          description: Internal server error
+
+  /api/v3/users/register/complete:
+    post:
+      summary: Registration Completion
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password, otp, session_key]
+              properties:
+                email:
+                  $ref: "#/components/schemas/Email"
+                password:
+                  $ref: "#/components/schemas/Password"
+                otp:
+                  $ref: "#/components/schemas/OTP"
+                session_key:
+                  $ref: "#/components/schemas/SessionKey"
+      responses:
+        "201":
+          description: Registration successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    example: Registration completed successfully
+        "400":
+          description: Validation failed
+        "403":
+          description: Invalid or expired OTP
+        "500":
+          description: Internal server error
+
+  /api/v1/users/login:
+    post:
+      summary: Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email:
+                  $ref: "#/components/schemas/Email"
+                password:
+                  $ref: "#/components/schemas/Password"
+      responses:
+        "200":
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  session_key:
+                    $ref: "#/components/schemas/SessionKey"
+        "400":
+          description: Account locked
+        "401":
+          description: Invalid credentials
+        "500":
+          description: Internal server error
+
+  /api/v1/users/logout:
+    post:
+      summary: Logout
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, session_key]
+              properties:
+                email:
+                  $ref: "#/components/schemas/Email"
+                session_key:
+                  $ref: "#/components/schemas/SessionKey"
+      responses:
+        "200":
+          description: Logout successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    example: Logout successful
+        "401":
+          description: Invalid session
+        "500":
+          description: Internal server error
+
+  /api/v1/users/refresh_session:
+    post:
+      summary: Refresh session key
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password, session_key]
+              properties:
+                email:
+                  $ref: "#/components/schemas/Email"
+                password:
+                  $ref: "#/components/schemas/Password"
+                session_key:
+                  $ref: "#/components/schemas/SessionKey"
+      responses:
+        "200":
+          description: Session refreshed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  session_key:
+                    $ref: "#/components/schemas/SessionKey"
+        "401":
+          description: Invalid credentials or session
+        "500":
+          description: Internal server error
+
+  /api/v1/prefix_user:
+    get:
+      summary: Get user profile
+      parameters:
+        - in: query
+          name: email
+          required: true
+          schema:
+            $ref: "#/components/schemas/Email"
+        - in: query
+          name: session_key
+          required: true
+          schema:
+            $ref: "#/components/schemas/SessionKey"
+      responses:
+        "200":
+          description: Profile retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  email:
+                    $ref: "#/components/schemas/Email"
+                  first_name:
+                    $ref: "#/components/schemas/Name"
+                  last_name:
+                    $ref: "#/components/schemas/Name"
+                  country:
+                    $ref: "#/components/schemas/GenericField"
+        "403":
+          description: Invalid or logged-out session
+        "500":
+          description: Internal server error
+
+    put:
+      summary: Update user profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - session_key
+                - first_name
+                - last_name
+                - country
+                - pin_code
+                - contact_country_code
+                - contact_number
+                - password
+              properties:
+                email:
+                  $ref: "#/components/schemas/Email"
+                session_key:
+                  $ref: "#/components/schemas/SessionKey"
+                first_name:
+                  $ref: "#/components/schemas/Name"
+                last_name:
+                  $ref: "#/components/schemas/Name"
+                country:
+                  $ref: "#/components/schemas/GenericField"
+                pin_code:
+                  $ref: "#/components/schemas/GenericField"
+                contact_country_code:
+                  $ref: "#/components/schemas/CountryCode"
+                contact_number:
+                  $ref: "#/components/schemas/ContactNumber"
+                password:
+                  $ref: "#/components/schemas/Password"
+      responses:
+        "202":
+          description: User updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    example: User updated successfully
+        "400":
+          description: Validation failed
+        "403":
+          description: Invalid session
+        "500":
+          description: Internal server error
+
+    delete:
+      summary: Delete user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password, session_key]
+              properties:
+                email:
+                  $ref: "#/components/schemas/Email"
+                password:
+                  $ref: "#/components/schemas/Password"
+                session_key:
+                  $ref: "#/components/schemas/SessionKey"
+      responses:
+        "202":
+          description: User deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    example: User deleted successfully
+        "401":
+          description: Invalid credentials or session
+        "500":
+          description: Internal server error
+
+  /api/v1/users/forget_password:
+    post:
+      summary: Forget password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, new_password, confirm_new_password, session_key]
+              properties:
+                email:
+                  $ref: "#/components/schemas/Email"
+                new_password:
+                  $ref: "#/components/schemas/Password"
+                confirm_new_password:
+                  $ref: "#/components/schemas/Password"
+                session_key:
+                  $ref: "#/components/schemas/SessionKey"
+      responses:
+        "200":
+          description: Password updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    example: Password updated successfully
+        "400":
+          description: Validation failed or mismatch
+        "403":
+          description: Invalid session
+        "500":
+          description: Internal server error
+
+  /api/v1/version:
+    get:
+      summary: Get API version
+      responses:
+        "200":
+          description: Version info
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  version:
+                    example: "3.0.0"
+        "500":
+          description: Internal server error
